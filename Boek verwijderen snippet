@@ -1,0 +1,14 @@
+                elif keuze ==4:
+                    loginAdmin = input("Admin username")   
+                    titel = input("Geef de titel van het boek wat je wilt toevoegen: ")
+                    schrijver = input("Geef de naam van de schrijver van het boek wat je wilt terugbrengen: ")
+                    
+                    if titel.lower() != 'stop' or schrijver.lower() != 'stop':
+                        for i,line in enumerate(Catalogus):
+                            if titel in line:
+                                Catalogus.pop(i)
+                                break
+                        else:
+                            tmplist = [titel,schrijver]
+                            Catalogus.append(tmplist)
+                            print("gelukt")
