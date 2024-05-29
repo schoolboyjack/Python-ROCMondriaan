@@ -1,0 +1,47 @@
+titel = input("Geef de titel van het boek wat je wilt terugbrengen: ")
+  for i,line in enumerate(Leden):
+      #Stap 13.2 - Wordt het boek ook echt door deze persoon geleend?
+      if gebruikersnaam in line and titel in line[4]:
+          
+          #stap 13.4 - is de deadline overschreden?
+          #verkrijgt de datum van het geleende boek en noemt het loandate
+          try:
+              tmpline = line[4].split(',')
+              
+              for item in tmpline:
+                  if titel in item:
+                      
+                      item = item.split('|')
+                      loandate = item[1]
+          except:
+              tmpline = line[4].split('|')
+              loandate = tmpline[1]
+          loandate = datetime.strptime(loandate, "%Y-%m-%d")
+              
+
+          today = datetime.today()
+          
+          #Berekent of er een boete is
+          if loandate < today:
+              # Calculate the number of days ago
+              delta = today - loandate
+              days_ago = delta.days
+      
+              # Multiply the number of days by 0.20
+              boete = days_ago * 0.20
+              
+              for j,line in enumerate(Leden):
+                  
+                  
+                  if line[0] == gebruikersnaam:
+                      #print(line) #e.g of a line ['Mike', 'Jackson', '123', '64', 'To Kill a Mockingbird|2022-07-15,The Shadow of the Wind|2024-08-31', '', '136.6']
+                      
+                      #kijkt of er al een bestaande boete is. Zo ja, voegt hij het totaal toe aan het bestaande aantal.
+                      try:
+                          float(Leden[j][-1])
+                          bestaande_boete = Leden[j][-1]
+                          Leden[j].pop()
+                          Leden[j].append(boete+float(bestaande_boete))
+                      except:
+                          Leden[j].append(boete)
+                      break
